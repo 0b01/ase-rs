@@ -64,7 +64,7 @@ impl ColorProfileChunk {
         wtr.write_u16::<LittleEndian>(self.flags.bits)?;
         wtr.write_f32::<LittleEndian>(self.fixed_gamma)?;
         wtr.seek(SeekFrom::Current(8))?;
-        wtr.write(&self.icc_profile)?;
+        wtr.write_all(&self.icc_profile)?;
         Ok(())
     }
 }

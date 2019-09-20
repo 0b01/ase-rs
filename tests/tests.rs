@@ -1,5 +1,5 @@
 use ase::*;
-use std::fs;
+
 use std::io::{Cursor, Read, Seek, SeekFrom, Write};
 
 fn test_read(fname: &str) -> std::io::Result<()> {

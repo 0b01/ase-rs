@@ -8,7 +8,7 @@ impl PathChunk {
     where
         R: Read + Seek,
     {
-        read.seek(SeekFrom::Current(chunk_data_size as i64))?;
+        read.seek(SeekFrom::Current(i64::from(chunk_data_size)))?;
         Ok(Self {})
     }
 

@@ -42,7 +42,7 @@ impl Cel {
         }
     }
 
-    pub fn pixels(&self, color_depth: &ColorDepth) -> Option<Pixels> {
+    pub fn pixels(&self, color_depth: ColorDepth) -> Option<Pixels> {
         match &self {
             Cel::CompressedImage {
                 zlib_compressed_data,
@@ -97,7 +97,7 @@ impl CelChunk {
 
     fn read_pixels<R>(
         read: &mut R,
-        color_depth: &ColorDepth,
+        color_depth: ColorDepth,
         pixels_size: u64,
     ) -> io::Result<Pixels>
     where
@@ -136,12 +136,12 @@ impl CelChunk {
             0 => {
                 let width = read.read_u16::<LittleEndian>()?;
                 let height = read.read_u16::<LittleEndian>()?;
-                let pixels_size = chunk_start + chunk_data_size as u64
+                let pixels_size = chunk_start + u64::from(chunk_data_size)
                     - read.seek(SeekFrom::Current(0))?;
 
                 let pixels = CelChunk::read_pixels(
                     read,
-                    &header.color_depth,
+                    header.color_depth,
                     pixels_size,
                 )?;
                 Cel::RawCel {
@@ -157,7 +157,7 @@ impl CelChunk {
                 let width = read.read_u16::<LittleEndian>()?;
                 let height = read.read_u16::<LittleEndian>()?;
 
-                let data_size = chunk_start + chunk_data_size as u64
+                let data_size = chunk_start + u64::from(chunk_data_size)
                     - read.seek(SeekFrom::Current(0))?;
                 let zlib_compressed_data =
                     read_bytes(read, data_size as usize)?;
@@ -219,7 +219,7 @@ impl CelChunk {
             } => {
                 wtr.write_u16::<LittleEndian>(*width)?;
                 wtr.write_u16::<LittleEndian>(*height)?;
-                wtr.write(&zlib_compressed_data)?;
+                wtr.write_all(&zlib_compressed_data)?;
             }
         }
 
@@ -248,6 +248,6 @@ mod tests {
             zlib_compressed_data: data,
         };
 
-        cel.pixels(&ColorDepth::RGBA);
+        cel.pixels(ColorDepth::RGBA);
     }
 }

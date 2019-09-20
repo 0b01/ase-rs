@@ -70,7 +70,7 @@ impl Aseprite {
         }
         let body_len = frames_wtr.position() as u32;
         self.header.write(wtr, body_len, self.frames.len() as u16)?;
-        wtr.write(&frames_wtr.into_inner())?;
+        wtr.write_all(&frames_wtr.into_inner())?;
         Ok(())
     }
 }

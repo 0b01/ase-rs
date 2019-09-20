@@ -48,7 +48,7 @@ impl MaskChunk {
         wtr.write_u16::<LittleEndian>(self.height)?;
         wtr.seek(SeekFrom::Current(8))?;
         write_string(wtr, &self.mask_name)?;
-        wtr.write(&self.bitmap_data)?;
+        wtr.write_all(&self.bitmap_data)?;
         Ok(())
     }
 }

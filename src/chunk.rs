@@ -159,7 +159,7 @@ impl Chunk {
         };
         wtr.write_u16::<LittleEndian>(chunk_type)?;
 
-        wtr.write(&chunk_wtr.into_inner())?;
+        wtr.write_all(&chunk_wtr.into_inner())?;
         Ok(())
     }
 }

@@ -139,7 +139,7 @@ impl Pixels {
                 }
             }
             Indexed(indices) => {
-                wtr.write(indices)?;
+                wtr.write_all(indices)?;
             }
         }
         Ok(())

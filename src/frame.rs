@@ -41,7 +41,7 @@ impl Frame {
         let number_of_chunks_new = read.read_u32::<LittleEndian>()?;
 
         let number_of_chunks = if number_of_chunks_new == 0 {
-            number_of_chunks_old as u32
+            u32::from(number_of_chunks_old)
         } else {
             number_of_chunks_new
         };
@@ -91,7 +91,7 @@ impl Frame {
             wtr.write_u32::<LittleEndian>(self.chunks.len() as u32)?;
         }
 
-        wtr.write(&chunks_wtr.into_inner())?;
+        wtr.write_all(&chunks_wtr.into_inner())?;
         Ok(())
     }
 }

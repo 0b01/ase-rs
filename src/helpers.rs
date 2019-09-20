@@ -6,8 +6,7 @@ pub fn read_bytes<R>(read: &mut R, length: usize) -> io::Result<Vec<u8>>
 where
     R: Read,
 {
-    let mut bytes = Vec::with_capacity(length);
-    bytes.resize(length, 0);
+    let mut bytes = vec![0; length];
     read.read_exact(&mut bytes[..])?;
     Ok(bytes)
 }
@@ -27,6 +26,6 @@ where
     W: Write,
 {
     wtr.write_u16::<LittleEndian>(string.len() as u16)?;
-    wtr.write(&string.as_bytes())?;
+    wtr.write_all(&string.as_bytes())?;
     Ok(())
 }
