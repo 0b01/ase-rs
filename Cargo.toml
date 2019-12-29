@@ -13,7 +13,7 @@ repository = "https://github.com/matheuslessarodrigues/ase-rs"
 [dependencies]
 byteorder = "1"
 bitflags = "1.0"
-num_enum = "0.1.1"
+num_enum = "0.4.2"
 flate2 = "1.0"
 
 
